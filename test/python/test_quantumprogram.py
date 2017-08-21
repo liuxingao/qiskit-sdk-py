@@ -516,6 +516,35 @@ class TestQuantumProgram(unittest.TestCase):
 
         self.assertEqual(result['status'], 'Done')
 
+    def test_save_with_results(self):
+        """
+        Save a Quantum Program in Json file
+        """
+        QP_program = QuantumProgram(specs=QPS_SPECS)
+
+        qc = QP_program.get_circuit("circuitName")
+        qr = QP_program.get_quantum_register("qname")
+        cr = QP_program.get_classical_register("cname")
+
+        qc.u3(0.3, 0.2, 0.1, qr[0])
+        qc.h(qr[1])
+        qc.cx(qr[1], qr[2])
+        qc.barrier()
+        qc.cx(qr[0], qr[1])
+        qc.h(qr[0])
+        qc.z(qr[2]).c_if(cr, 1)
+        qc.x(qr[2]).c_if(cr, 1)
+        qc.measure(qr[0], cr[0])
+        qc.measure(qr[1], cr[1])
+        
+        circuits = ['circuitName']
+        backend = 'local_unitary_simulator'  # the backend to run on
+        result = QP_program.execute(circuits, backend=backend)
+
+        result = QP_program.save("./test/python/test_save.json", beauty=True)
+
+        self.assertEqual(result['status'], 'Done')
+
     def test_save_wrong(self):
         """
         Save a Quantum Program in Json file: Errors Control

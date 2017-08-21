@@ -26,6 +26,7 @@ import os
 import string
 import re
 import copy
+import numpy as np
 
 # use the external IBMQuantumExperience Library
 from IBMQuantumExperience.IBMQuantumExperience import IBMQuantumExperience
@@ -106,6 +107,7 @@ class QuantumProgram(object):
         self.__ONLINE_BACKENDS = []
         self.__LOCAL_BACKENDS = self.local_backends()
         self.mapper = mapper
+        self.__results = {}
         if specs:
             self.__init_specs(specs)
 
@@ -455,13 +457,27 @@ class QuantumProgram(object):
     def get_api(self):
         """Returns a function handle to the API."""
         return self.__api
+    
+    def reset_results(self):
+        """ Reset the results stored in the Quantum Program
 
-    def save(self, file_name=None, beauty=False):
+        Args:
+            None
+
+        Returns:
+            None
+        
+        """
+        self.__results = {}
+
+
+    def save(self, file_name=None, beauty=False, results=True):
         """ Save Quantum Program in a Json file.
 
         Args:
             file_name (str): file name and path.
             beauty (boolean): save the text with indent 4 to make it readable.
+            results (boolean): save results [if exist executions], is true by default
 
         Returns:
             The dictionary with the status and result of the operation
@@ -487,10 +503,18 @@ class QuantumProgram(object):
         for circuit in elemements_to_save:
             elements_saved[circuit] = {}
             elements_saved[circuit]["qasm"] = elemements_to_save[circuit].qasm()
+        # TODO: Review to store the results by circuit
+
+        result_tmp = []
+        for backend_result in self.__results:
+            result_tmp.append({backend_result:self.__results[backend_result]})
+
+        elements_saved["results"] = result_tmp
+        # elements_saved["results"] = elements_saved
 
         try:
             with open(file_name, 'w') as save_file:
-                json.dump(elements_saved, save_file, indent = indent)
+                json.dump(elements_saved, save_file, indent=indent, cls=JSONEncoder)
             return {'status': 'Done', 'result': elemements_to_save}
         except ValueError:
             error = {'status': 'Error', 'result': 'Some Problem happened to save the file'}
@@ -515,11 +539,14 @@ class QuantumProgram(object):
             error = {"status": "Error", "result": "Not filename provided"}
             raise LookupError(error['result'])
 
-        elemements_to_load = {}
-
         try:
             with open(file_name, 'r') as load_file:
                 elemements_loaded = json.load(load_file)
+
+            if "results" in elemements_loaded:
+                #TODO: review unitary simulator results convertion
+                self.__results = elemements_loaded["results"]
+                del elemements_loaded["results"]
 
             for circuit in elemements_loaded:
                 circuit_qasm = elemements_loaded[circuit]["qasm"]
@@ -1002,6 +1029,19 @@ class QuantumProgram(object):
         if qobj_result['status'] == 'COMPLETED':
             assert len(qobj["circuits"]) == len(qobj_result['result']), (
                 'Internal error in QuantumProgram.run(), job_result')
+        
+        # Store the execution Result into the Quantum Progam Object
+        if not backend in self.__results:
+            self.__results[backend] = []
+
+        self.__results[backend].append({
+            "id": qobj["id"],
+            "time": int(time.time()),
+            "execution_config": qobj["config"],
+            "status": qobj_result["status"],
+            "result": qobj_result["result"]
+            })
+            
         results = Result(qobj_result, qobj)
         return results
 
@@ -1339,3 +1379,23 @@ class ResultError(QISKitError):
         self.status = error['status']
         self.message = error['message']
         self.code = error['code']
+
+class JSONEncoder(json.JSONEncoder):
+    """JSON Encoder.
+
+    Allow us to rewrite our internal object representation to JSON.
+    
+    Returns:    
+            the specific translation from any of the NP and Complex numbers to a JSON equivalents
+    """
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, complex):
+            return '{:.2f}'.format(obj)
+        else:
+            return super(JSONEncoder, self).default(obj)
