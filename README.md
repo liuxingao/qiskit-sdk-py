@@ -22,7 +22,7 @@ Links to Sections:
 
 To use QISKit Python version you'll need to have installed [Python 3 or later](https://www.python.org/downloads/) and [Jupyter Notebooks](https://jupyter.readthedocs.io/en/latest/install.html) (recommended to interact with tutorials). 
 
-For this reason e recomend to use [Anaconda 3](https://www.continuum.io/downloads#windows) python distribution for install all of this dependencies.
+For this reason e recomend to use [Anaconda 3](https://www.continuum.io/downloads) python distribution for install all of this dependencies.
 
 In addition, a basic understanding of quantum information is very helpful when interacting with QISKit. If you're new to quantum, Start with our [User Guides](https://github.com/QISKit/ibmqx-user-guides)!
 
@@ -56,7 +56,7 @@ If you don't have Git installed, click the "Clone or download" button at the URL
 
 ## Getting Started
 
-Now that the SDK is installed, it's time to begin working with QISKit. First, get your [API token and configure your Qconfig file](QISKitDETAILS.rst#APIToken), it allow to you to execute your programs in the IBM Quantum Experience chips.
+Now that the SDK is installed, it's time to begin working with QISKit. First, get your [API token and configure your Qconfig file](doc/install.rst#APIToken), it allow to you to execute your programs in the IBM Quantum Experience chips.
 
 After, try out some example QASM, which runs via the local simulator or the online simulator or [real Quantum Chips](#quantum-chips).
 

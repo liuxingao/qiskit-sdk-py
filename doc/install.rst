@@ -44,7 +44,7 @@ folder on your local machine:
    then navigate to that folder in a terminal window.
 
 3.1 Setup the environment
-------------------------
+-------------------------
 
 To use as a library install the dependencies:
 
@@ -100,7 +100,7 @@ with QISKit, and install the required dependencies:
    quotation marks on that line. Save and close the file.
 
 Install Jupyter-based tutorials
-====================================
+===============================
 
 The QISKit project provide you collection of tutorials in the form of Jupyter 
 notebooks, which are essentially web pages that contain "cells" of embedded 
@@ -117,6 +117,7 @@ started with the tutorials, follow the instructions below.
 - in the terminal/commandline and into the folder "qiskit-tutorial-master" execute:
 
 .. code:: sh
+
     jupyter notebook index.ipynb
 
 1.2 Install into the QISKit folder
@@ -150,11 +151,13 @@ If you upgrade the dependencies and get the error below, try the fix
 shown below the error:
 
 - Depending on the system and setup to append "sudo -H" before could be needed.
+
 .. code:: sh
 
     pip install --upgrade IBMQuantumExperience
     
 - Fix: run the command below
+
 .. code:: sh
 
     curl https://bootstrap.pypa.io/ez_setup.py -o - | python

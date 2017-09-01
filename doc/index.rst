@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-
+.. include:: qiskit.rst
 
 Python Modules
 ==============
@@ -14,7 +14,7 @@ Python Modules
 
    _autodoc/modules
 
-
+.. include:: install.rst
 
 Authors (alphabetical)
 ======================
