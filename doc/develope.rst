@@ -70,7 +70,6 @@ with QISKit, and install the required dependencies:
     .\make env
 
 
-
 Anaconda Installation 
 ~~~~~~~~~~~~~~~~~~~~~
 

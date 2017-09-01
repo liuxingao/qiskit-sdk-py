@@ -55,7 +55,13 @@ GOTO :next
 
 :run
 cd examples\jupyter
-jupyter notebook
+jupyter notebook index.ipynb
+IF errorlevel 9009 GOTO :error
+GOTO :next
+
+:run-tutorials
+cd tutorials
+jupyter notebook index.ipynb
 IF errorlevel 9009 GOTO :error
 GOTO :next
 

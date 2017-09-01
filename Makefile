@@ -23,8 +23,14 @@ env:
 		bash -c "source activate QISKitenv;pip install -r requires.txt"; \
 	fi;
 
+install-tutorials:
+	bash -c "curl -L  https://github.com/QISKit/qiskit-tutorial/archive/master.zip > tutorials.zip; unzip tutorials.zip;mv qiskit-tutorial-master tutorials;rm tutorials.zip"
+
+run-tutorials:
+	bash -c "source activate QISKitenv;cd tutorials;jupyter notebook index.ipynb"
+
 run:
-	bash -c "source activate QISKitenv;cd examples; cd jupyter;jupyter notebook"
+	bash -c "source activate QISKitenv;cd examples; cd jupyter;jupyter notebook index.ipynb"
 
 # Ignoring generated ones with .py extension.
 lint:

@@ -1,11 +1,12 @@
-Quantum Information Software Kit (QISKit) SDK Python
-====================================================
+====================
+QISKit Documentation
+====================
 
-Python software development kit (SDK) and Jupyter notebooks for working
-with OpenQASM and the IBM Q experience (QX).
+Quantum Information Software Kit (QISKit), SDK Python version for working
+with `OpenQASM <https://github.com/IBM/qiskit-openqasm>`_ and the IBM Q experience (QX).
 
 Philosophy
-----------
+==========
 
 The basic concept of our quantum program is an array of quantum
 circuits. The program workflow consists of three stages: Build, Compile,
@@ -18,26 +19,72 @@ putting this data together, depending on the program. This either gives
 you the answer you wanted or allows you to make a better program for the
 next instance.
 
-Organization
-------------
+Project Overview
+================
+The QISKit project comprises:
 
-The *tutorial* directory contains Jupyter notebooks demonstrating
-components of the SDK. Take a look at the
-`index <tutorial/index.ipynb>`__ to get started. The SDK uses the
-`Python API <https://github.com/IBM/qiskit-api-py>`__ to interact with
-the QX and expresses quantum circuits using
-`OpenQASM <https://github.com/IBM/qiskit-openqasm>`__. Python example
-programs can be found in the *examples* directory, and test scripts are
+* `QISKit SDK <https://github.com/IBM/qiskit-sdk-py>`_: Provides
+  support for the Quantum Experience circuit generation phase and lets
+  you use the QISKit API to access the Quantum Experience hardware and
+  simulators. The SDK also includes example scripts written for
+  Jupyter Notebooks.
+
+* `QISKit API <https://github.com/IBM/qiskit-api-py>`_: A thin Python
+  wrapper around the Quantum Experience HTTP API that enables you to
+  connect and and execute OpenQASM code.
+
+* `QISKit OpenQASM <https://github.com/IBM/qiskit-openqasm>`_: Contains
+  specifications, examples, documentation, and tools for the OpenQASM
+  intermediate representation.
+
+
+Getting Started
+===============
+
+The starting point for writing code is the QuantumProgram object. The
+QuantumProgram is a collection of circuits, or scores if you are
+coming from the Quantum Experience, quantum register objects, and
+classical register objects. The QuantumProgram methods can send these
+circuits to quantum hardware or simulator backends and collect the
+results for further analysis.
+
+To compose and run a circuit on a simulator, which is distributed with
+this project, one can do,
+
+.. code-block:: python
+
+   from qiskit import QuantumProgram
+   qp = QuantumProgram()
+   qr = qp.create_quantum_register('qr', 2)
+   cr = qp.create_classical_register('cr', 2)
+   qc = qp.create_circuit('Bell', [qr], [cr])
+   qc.h(qr[0])
+   qc.cx(qr[0], qr[1])
+   qc.measure(qr[0], cr[0])
+   qc.measure(qr[1], cr[1])
+   result = qp.execute('Bell')
+   print(result.get_counts('Bell'))
+
+The :code:`get_counts` method outputs a dictionary of state:counts pairs;
+
+.. code-block:: python
+
+	 {'00': 531, '11': 493}
+
+Project Organization
+--------------------
+
+Python example programs can be found in the *examples* directory, and test scripts are
 located in *test*. The *qiskit* directory is the main module of the SDK.
 
 Structure
----------
+=========
 
 Programming interface
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The *qiskit* directory is the main Python module and contains the
-programming interface objects *QuantumProgram*, *QuantumRegister*,
+programming interface objects `QuantumProgram <quantum_program.rst>`__, *QuantumRegister*,
 *ClassicalRegister*, and *QuantumCircuit*.
 
 At the highest level, users construct a *QuantumProgram* to create,
@@ -53,7 +100,7 @@ other gate sets and algorithms. Currently there is a *standard*
 extension defining some typical quantum gates.
 
 Internal modules
-~~~~~~~~~~~~~~~~
+----------------
 
 The directory also contains internal modules that are still under
 development:
@@ -83,147 +130,13 @@ fixed couplings given by a *CouplingGraph*.
 The four circuit representations and how they are currently transformed
 into each other are summarized in this figure:
 
+.. image:: ../images/circuit_representations.png
+    :width: 600px
+    :align: center
+
 Several unroller backends and their outputs are summarized here:
 
-Installation and setup
-----------------------
+.. image:: ../images/unroller_backends.png
+    :width: 600px
+    :align: center
 
-1. Get the tools
-~~~~~~~~~~~~~~~~
-
-You'll need:
-
--  Install `Python 3 <https://docs.python.org/3/using/index.html>`__.
--  `Jupyter <http://jupyter.readthedocs.io/en/latest/install.html>`__
-   client is needed to run the tutorials, not to use as a library.
--  Mac OS X users will find Xcode useful:
-   https://developer.apple.com/xcode/
--  Optionally download Git: https://git-scm.com/download/.
-
-2. Get the code
-~~~~~~~~~~~~~~~
-
-Clone the QISKit SDK repository and navigate to its folder on your local
-machine:
-
--  If you have Git installed, run the following commands:
-
-.. code:: sh
-
-    git clone https://github.com/IBM/qiskit-sdk-py
-    cd qiskit-sdk-py
-
--  If you don't have Git installed, click the "Clone or download" button
-   at the URL shown in the git clone command, unzip the file if needed,
-   then navigate to that folder in a terminal window.
-
-3. Setup the environment
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-To use as a library install the dependencies:
-
-.. code:: sh
-
-    # Depending on the system and setup to append "sudo -H" before could be needed.
-    pip3 install -r requires.txt
-
-To get the tutorials working set up an Anaconda environment for working
-with QISKit, and install the required dependencies:
-
--  If running either Linux or Mac OS X with Xcode, simply run the
-   following command:
-
-.. code:: sh
-
-    make env
-
--  If running either Windows or Mac OS X without Xcode, run the
-   following set of commands:
-
-.. code:: sh
-
-    conda create -y -n QISKitenv python=3 pip scipy
-    activate QISKitenv
-    pip install -r requires.txt
-
-.. _APIToken:
-
-4. Configure your API token
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  Create an `IBM Quantum
-   Experience <https://quantumexperience.ng.bluemix.net>`__ account if
-   you haven't already done so
--  Get an API token from the Quantum Experience website under “My
-   Account” > “Personal Access Token”
--  You will insert your API token in a file called Qconfig.py. First
-   copy the default version of this file from the tutorial folder to the
-   main SDK folder (on Windows, replace ``cp`` with ``copy``):
-
-.. code:: sh
-
-    cp Qconfig.py.default Qconfig.py
-
--  Open your Qconfig.py, remove the ``#`` from the beginning of the API
-   token line, and copy/paste your API token into the space between the
-   quotation marks on that line. Save and close the file.
-
-Starting the Jupyter-based tutorials
-------------------------------------
-
-The SDK includes tutorials in the form of Jupyter notebooks, which are
-essentially web pages that contain "cells" of embedded Python code. To
-run a cell, click on it and hit ``Shift+Enter`` or use the toolbar at
-the top of the page. Any output from a cell is displayed immediately
-below it on the page. In most cases, the cells on each page must be run
-in sequential order from top to bottom in order to avoid errors. To get
-started with the tutorials, follow the instructions below.
-
--  If running either Linux or Mac OS X with Xcode, simply run the
-   following command from the QISKit SDK folder:
-
-.. code:: sh
-
-    make run_tutorial
-
--  If running either Windows or Mac OS X without Xcode, run the
-   following set of commands from the QISKit SDK folder:
-
-.. code:: sh
-
-    activate QISKitenv
-    cd tutorial
-    jupyter notebook index.ipynb
-
-FAQ
----
-
-If you upgrade the dependencies and get the error below, try the fix
-shown below the error:
-
-.. code:: sh
-
-    # Depending on the system and setup to append "sudo -H" before could be needed.
-    pip3 install --upgrade IBMQuantumExperience
-    *Cannot remove entries from nonexistent file [PATH]/easy-install.pth
-
-    # Fix: run the command below
-    curl https://bootstrap.pypa.io/ez_setup.py -o - | python
-
-For additional troubleshooting tips, see the QISKit troubleshooting page
-on the project's GitHub wiki.
-
-Authors (alphabetical)
-----------------------
-
-The first release of QISKit was developed by Jim Challenger, Andrew
-Cross, Ismael Faro, Jay Gambetta, Jesus Perez, and John Smolin.
-
-In future releases, anyone who contributes code to this project can
-include their name here.
-
-License
--------
-
-QISKit is released under the `Apache license, version
-2.0 <https://www.apache.org/licenses/LICENSE-2.0>`__.

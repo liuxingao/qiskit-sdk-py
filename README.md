@@ -167,24 +167,13 @@ QISKit was originally developed by researchers and developers on the [IBM-Q]() T
 
 Visit the [IBM Q Experience community](https://quantumexperience.ng.bluemix.net/qx/community) for questions and discussion on QISKit and quantum computing more broadly. If you'd like to contribute to QISKit, please take a look at our [contribution guidelines](CONTRIBUTING.rst).
 
-## FAQ
 
-If you upgrade the dependencies and get the error below, try the fix
-shown below the error:
+## Authors (alphabetical)
 
-* Depending on the system and setup to append "sudo -H" before could be needed.
-    ```
-    pip install --upgrade IBMQuantumExperience
-    ```
-* Cannot remove entries from nonexistent file [PATH]
-    ```
-    /easy-install.pth
-    ```
-* Fix: run the command below
-    ```
-    curl https://bootstrap.pypa.io/ez_setup.py -o - | python
-    ```
-For additional troubleshooting tips, see the QISKit troubleshooting page on the project's GitHub wiki.
+Jim Challenger, Andrew Cross, Ismael Faro, Jay Gambetta, Juan Gomez, Paco Martin, Antonio Mezzacapo, Jesus Perez, and John Smolin, Erick Winston, Chris Wood.
+
+In future releases, anyone who contributes code to this project can include their name here.
+
 
 ## License
 
