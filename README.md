@@ -22,7 +22,7 @@ Links to Sections:
 
 To use QISKit Python version you'll need to have installed [Python 3 or later](https://www.python.org/downloads/) and [Jupyter Notebooks](https://jupyter.readthedocs.io/en/latest/install.html) (recommended to interact with tutorials). 
 
-For this reason e recomend to use [Anaconda 3](https://www.continuum.io/downloads) python distribution for install all of this dependencies.
+For this reason we recomend to use [Anaconda 3](https://www.continuum.io/downloads) python distribution for install all of this dependencies.
 
 In addition, a basic understanding of quantum information is very helpful when interacting with QISKit. If you're new to quantum, Start with our [User Guides](https://github.com/QISKit/ibmqx-user-guides)!
 
@@ -32,7 +32,7 @@ For those more familiar with python, follow the QISKit install process below:
 
 ### PIP Installation
 
-the fast way to install QISKit is using PIP tool (Python package manager):
+The fast way to install QISKit is using PIP tool (Python package manager):
 
 ```
     pip install qiskit
@@ -42,21 +42,24 @@ the fast way to install QISKit is using PIP tool (Python package manager):
 
 Other common option is clone the QISKit SDK repository and navigate to its folder on your local machine:
 
+#### Download the code 
+
 Select the "Clone or download" button at the top of this webpage (or from URL shown in the git clone command), unzip the file if needed, and navigate to **qiskit-sdk-py folder** in a terminal window.
+
+#### Clone the repository 
 
 Alternatively, if you have Git installed, run the following commands:
 ```
     git clone https://github.com/QISKit/qiskit-sdk-py
     cd qiskit-sdk-py
 ```
+### Setup you enviroment
 
-### Download the code
-
-If you don't have Git installed, click the "Clone or download" button at the URL shown in the git clone command, unzip the file if needed, then navigate to that folder in a terminal window.
+We recomend that you use python Virtual enviroments to improve your experience. You can get more info about it in: [Setup the environment](doc/install.rst#3.1-Setup-the-environment)
 
 ## Getting Started
 
-Now that the SDK is installed, it's time to begin working with QISKit. First, get your [API token and configure your Qconfig file](doc/install.rst#APIToken), it allow to you to execute your programs in the IBM Quantum Experience chips.
+Now that the SDK is installed, it's time to begin working with QISKit. First, get your [API token and configure your Qconfig file](doc/install.rst#4-configure-your-api-token), it allow to you to execute your programs in the IBM Quantum Experience chips.
 
 After, try out some example QASM, which runs via the local simulator or the online simulator or [real Quantum Chips](#quantum-chips).
 
@@ -107,8 +110,10 @@ The basic concept of our quantum program is an array of quantum
 circuits. The program workflow consists of three stages: Build, Compile, and Run. Build allows you to make different quantum circuits that represent the problem you are solving; Compile allows you to rewrite them to run on different backends (simulators/real chips of different quantum volumes, sizes, fidelity, etc); and Run launches the jobs. After the jobs have been run, the data is collected. There are methods for putting this data together, depending on the program. This either gives you the answer you wanted or allows you to make a better program for the
 next instance.
 
+You can get more details in [doc/qiskit.rst](doc/qiskit.rst).
+
 ### Quantum Chips
-If you want to execute your Quantum circuit in a real Chip, you can use the IBM Quantum Experience (QX) cloud service. Currently through QX you can use the following chips:
+If you want to execute your Quantum circuit in a real Chip, you can use the IBM Quantum Experience (QX) cloud platform. Currently through QX you can use the following chips:
 
 -   ibmqx2: [5-qubit backend](https://ibm.biz/qiskit-ibmqx2)
 
@@ -141,7 +146,7 @@ more information about the [IBM Q experience backend information](https://github
 
 You can review the QISKit documentation 
 
-Now you're set up and ready to check out some of our other examples in the [Tutorials](https://github.com/QISKit/qiskit-tutorial) repository! Our tutorials are developed using [Jupyter Notebooks](https://jupyter.org/), but can be accessed as read-only from the github web page.
+Now you're set up and ready to check out some of our other examples in the [Tutorials](https://github.com/QISKit/qiskit-tutorial) repository! Our tutorials are developed using [Jupyter Notebooks](https://jupyter.org/), but can be accessed as read-only from the github web page. If you want to install it like part of QISKit read the steps [doc/install.rst](doc/install.rst#Install-Jupyter-based-tutorials)
 
 Start with the [index](https://github.com/QISKit/qiskit-tutorial/blob/master/index.ipynb) and the [‘Getting Started’ example](https://github.com/QISKit/qiskit-tutorial/blob/002d054c72fc59fc5009bb9fa0ee393e15a69d07/1_introduction/getting_started.ipynb). If you have [Jupyter Notebooks installed](https://jupyter.readthedocs.io/en/latest/install.html), can copy and modify the notebooks to create experiments of your own.
 
@@ -163,7 +168,7 @@ For more information on how to use QISKit, tutorial examples, and other helpful 
 * **[QISkit Python API](https://github.com/QISKit/qiskit-api-py)**, an API to use the IBM Quantum Experience in Python
 
 
-QISKit was originally developed by researchers and developers on the [IBM-Q]() Team within [IBM Research](), in order to offer a high level development kit to work with quantum computers.
+QISKit was originally developed by researchers and developers on the [IBM-Q](http://www.research.ibm.com/ibm-q/) Team within [IBM Research](http://www.research.ibm.com/), in order to offer a high level development kit to work with quantum computers.
 
 Visit the [IBM Q Experience community](https://quantumexperience.ng.bluemix.net/qx/community) for questions and discussion on QISKit and quantum computing more broadly. If you'd like to contribute to QISKit, please take a look at our [contribution guidelines](CONTRIBUTING.rst).
 
