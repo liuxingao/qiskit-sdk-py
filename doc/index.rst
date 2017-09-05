@@ -8,10 +8,17 @@
 Python Modules
 ==============
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+Main Modules
+------------
 
+* `Quantum Program <./_autodoc/qiskit._quantumprogram.html>`__
+* `Quantum Circuit <./_autodoc/qiskit._quantumcircuit.html>`__
+* :ref:`modindex`
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+             
    _autodoc/modules
 
 .. include:: install.rst
@@ -50,9 +57,8 @@ If you'd like to contribute please take a look to our
    :hide:
    :options: -ELLIPSIS, +NORMALIZE_WHITESPACE
 
-Indices and tables
-==================
+Index and Search
+================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
